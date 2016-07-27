@@ -1,6 +1,6 @@
 {
   "name": "vued",
-  "version": "0.0.1-1rc",
+  "version": "0.0.1-beta.1",
   "description": "Mobile web UI based on Vue and Vux",
   "keywords": [
     "vued",
