@@ -17,7 +17,7 @@
                     </span>
                 </div>
 
-                <div class="address-list">
+                <div class="address-list" v-on:scroll.prevent>
                     <div class="address-item ui-border-b" :class="{'active': +m.area_id === +area[curTab].area_id}"
                          @click="selectThisArea(m)" v-for="m in curList">
                         {{m.area_name}}
