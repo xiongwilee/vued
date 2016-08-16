@@ -128,9 +128,10 @@ export default {
                     this.area[index+1].parent_id = area.area_id
 
                     // 如果下一级数据没有，则请求
-                    if (!this.listMap.hasOwnProperty(area.area_id)) {
-                        this.getArea(area.area_id)
-                    }
+                    // 这里的数据判断迁移至对this.curTab的watch，所以不需要再做判断
+                    // if (!this.listMap.hasOwnProperty(area.area_id)) {
+                    //     this.getArea(area.area_id)
+                    // }
 
                     // tab前进一次
                     this.curTab++
