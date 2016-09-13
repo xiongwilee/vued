@@ -259,6 +259,16 @@ export default {
       if (uuid === this.uuid) {
         this.pullup.restart()
       }
+    },
+    'goToTop' (uuid) {
+      if (uuid === this.uuid) {
+        this.reset({top: 0, left: 0})
+      }
+    },
+    'resetSize' (uuid) {
+      if (uuid === this.uuid) {
+        this._xscroll.resetSize()
+      }
     }
   },
   beforeDestroy () {
