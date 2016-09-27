@@ -12,7 +12,7 @@
 
                 <div class="address-tabs ui-border-b">
                     <span class="address-tab"
-                        :class="{'active': $index === curTab,'arrow':$index !== 2,'borderLine':$index === curTab}"
+                        :class="{'active': $index === curTab,'arrow':area[$index].area_name !== '' && $index !==2 ,'borderLine':$index === curTab}"
                         @click="selectThisTab($index)"
                         v-show ='area[$index].parent_id !== "" || $index == 0'
                         v-for="tab in 3">
@@ -243,6 +243,7 @@ export default {
         line-height: 2.5;
         font-size: 16px;
         background-color: #fff;
+
         backface-visibility: hidden;
         transform: translateY(100%);
         transition: -webkit-transform 0.3s;
