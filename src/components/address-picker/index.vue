@@ -6,21 +6,27 @@
             <div class="picker-box" :class="{'picker-toggle': show}">
 
                 <div class="address-title">
-                    <span class="title">请选择省市区</span>   
+                    <span class="title">所在地区</span>
                     <icon type="clear" @click="show = false" class="close"></icon>
                 </div>
 
                 <div class="address-tabs ui-border-b">
-                    <span class="address-tab" :class="{'active': $index === curTab,'arrow':$index !== 2}" 
-                          @click="selectThisTab($index)" v-for="tab in 3">
-                        {{area[$index].area_name || area[$index].intro}}
+                    <span class="address-tab"
+                        :class="{'active': $index === curTab,'arrow':$index !== 2,'borderLine':$index === curTab}"
+                        @click="selectThisTab($index)"
+                        v-show ='area[$index].parent_id !== "" || $index == 0'
+                        v-for="tab in 3">
+                            {{ area[$index].area_name || area[$index].intro}}
                     </span>
                 </div>
 
-                <div class="address-list" v-on:scroll.prevent>
-                    <div class="address-item ui-border-b" :class="{'active': +m.area_id === +area[curTab].area_id}"
+                <div class="address-list" v-on:scroll.prevent >
+                    <div>
+                        <div class="address-item ui-border-b"
+                        :class="{'active': +m.area_id === +area[curTab].area_id}"
                          @click="selectThisArea(m)" v-for="m in curList">
-                        {{m.area_name}}
+                            {{m.area_name}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -49,16 +55,17 @@ export default {
     ready () {
 
         // 获取首列地址
-        this.getArea(0)
+        this.getArea(0);
     },
     data () {
         return {
+            //v-show ='area[$index].area_id !== "" || $index == 0 || $index == 2'
 
             // 初始化临时地区数据
             area: [
-                {parent_id: 0, area_name:'',area_id:'',intro:'1.选择省'},
-                {parent_id: '',area_name:'',area_id:'',intro:'2.选择市'},
-                {parent_id: '',area_name:'',area_id:'',intro:'3.选择区'}
+                {parent_id: 0, area_name:'',area_id:'',intro:'请选择'},
+                {parent_id: '',area_name:'',area_id:'',intro:'请选择'},
+                {parent_id: '',area_name:'',area_id:'',intro:'请选择'}
             ],
 
             // 初始化当前tab
@@ -73,7 +80,7 @@ export default {
             // 加载提示
             loadingText: '加载中...',
             // 地址加载状态
-            loading: false,
+            loading: false
         }
     },
     props: {
@@ -160,7 +167,7 @@ export default {
                 parent_id: area_id || 0
             }, ({data})=>{
                 this.loading = false;
-                this.$set('listMap['+area_id+']', data.slice(0))
+                this.$set('listMap['+area_id+']', data.slice(0));
             }, ()=>{
                 this.loading = false;
             })
@@ -177,8 +184,8 @@ export default {
                 tempArea = this.areaSync[i] || {};
 
                 // 初始化本次显示的地区选择数据
-                if (tempArea && tempArea.parent_id !== '' 
-                             && tempArea.area_name 
+                if (tempArea && tempArea.parent_id !== ''
+                             && tempArea.area_name
                              && tempArea.area_id ) {
                     // 如果明确是一条真正的地址数据，则初始化记录
                     this.$set('area['+i+']', {
@@ -208,7 +215,7 @@ export default {
         }
     }
 }
-   
+
 </script>
 
 <style lang="less">
@@ -236,7 +243,6 @@ export default {
         line-height: 2.5;
         font-size: 16px;
         background-color: #fff;
-
         backface-visibility: hidden;
         transform: translateY(100%);
         transition: -webkit-transform 0.3s;
@@ -254,7 +260,7 @@ export default {
 
         .address-title{
             text-align: left;
-            padding-left: 10px;
+            padding-left: 5%;
             background-color: #ffffff;
             line-height: 45px;
             .title{
@@ -275,6 +281,7 @@ export default {
         font-size: 14px;
         line-height: 3;
         user-select: none;
+        padding-left:5%;
         background-color: #eeeeee;
         border-top: 1px solid #dadada;
         border-bottom: 1px solid #dadada;
@@ -283,23 +290,23 @@ export default {
             position: relative;
             outline: none;
             display: inline-block;
-            text-align: center;
-            width: 33.33%;
+            text-align: left;
+            margin-right:40px;
             &.active{
                 color: @globalThemeColor;
             }
             &.arrow:before{
                 content: " ";
-                height: 40px;
-                width: 40px;
-                border: 1px solid #dddddd;
+                height: 10px;
+                width: 10px;
+                border: 1px solid #979797;
                 border-bottom: 0px;
                 border-left: 0px;
                 display: inline-block;
                 transform: rotate(45deg);
                 position: absolute;
-                top: 0px;
-                right: -5px;
+                top: 16px;
+                right: -25px;
             }
         }
     }
@@ -313,12 +320,15 @@ export default {
         overflow-y: auto;
         background-color: #eeeeee;
         .address-item{
-            text-align: center;
+            text-align: left;
+            margin-left:5%;
 
             &.active{
                 color: @globalThemeColor;
             }
         }
     }
-    
+    .borderLine{
+        border-bottom:1px solid @globalThemeColor;
+    }
 </style>
