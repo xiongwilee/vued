@@ -111,7 +111,6 @@ export default {
 }
 .vux-popup-transiton {}
 .vux-popup-enter {
-  background-color:red;
   transform: translate3d(0, 100%, 0);
 }
 .vux-popup-leave {

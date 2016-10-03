@@ -158,6 +158,11 @@ export default {
       }
     }
   },
+  events: {
+    'on-index-change' (index) {
+      this.$dispatch('index-change', index)
+    }
+  },
   beforeDestroy () {
     this.destroy()
   }
